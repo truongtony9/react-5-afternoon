@@ -1,28 +1,40 @@
-import React,  { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { updateAgent } from "../../ducks/reducer";
 
-class WizardSix extends Component {
+class WizardFive extends Component {
+  render() {
+    const { updateAgent } = this.props;
 
-    render(){
-        return(
-            <div className="parent-div">
-                    <div className="vert-align">                    <p>What is the estimated purchase price?</p> <br />
-                        
-                        
-                        <input type="text" placeholder="amount" onChange={this.props.updateCost}/> <br />
+    return (
+      <div className="parent-div">
+        <div className="vert-align">
+          <p>Are you currently working with a real estate agent?</p> <br />
+          <div className="row">
+            <Link to="/wSix">
+              <button onClick={() => updateAgent(true)}>Yes</button>
+            </Link>
 
-
-                    <p>How much are you putting down as a down payment?</p> <br />
-                        
-                        
-                        <input type="text" placeholder="amount" onChange={this.props.updateDownPayment}/>                    
-                        
-                    
-                    <Link to="/wSeven"><button className="margin-btn"> Next </button></Link>
-                </div>
-            </div>
-        )
-    }
+            <Link to="/wSix">
+              <button onClick={() => updateAgent(false)}>No</button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
-export default WizardSix;
+function mapStateToProps(state) {
+  const { realEstateAgent } = state;
+
+  return {
+    realEstateAgent
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  { updateAgent }
+)(WizardFive);
